@@ -86,7 +86,7 @@ class WelcomePage {
 		
 	}
 
-	@SuppressWarnings("resource")
+//	@SuppressWarnings("resource")
 	public static int mainMenu() {
 		Scanner obj = new Scanner(System.in);
 		int option = 0;
@@ -97,21 +97,20 @@ class WelcomePage {
 		System.out.println("3 Transfer money");
 		System.out.println("4 Create a new bank account");
 		System.out.println("5 Close an existing account");
-		System.out.println("4 View account details");
-		System.out.println("5 View transaction history");
+		System.out.println("6 View account details");
+		System.out.println("7 View transaction history");
 		System.out.println("-----------------------------");
-		System.out.println("Enter the option number:");
+		System.out.print("Enter the option number:");
 		
 		try {
 			option = obj.nextInt();
-			obj.nextLine();
+// 			obj.nextLine();
 			if(option != 1 && option != 2 && option != 3 && option != 4 && option != 5 && option!= 6 && option != 7) {
 				throw new InputMismatchException("Invalid input!!! Input should be an integer from 1 to 5.");
 			}
 		}catch(InputMismatchException e) {
 			System.out.println(e.getMessage());
-			obj.close();
-			return 0;
+			option = 0;
 		}
 		obj.close();
 		return option;
@@ -235,7 +234,6 @@ class WelcomePage {
 		try {
 			mgr.closeAccount(accNo, pin);
 		} catch (InvalidPasswordException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		obj.close();
@@ -243,23 +241,36 @@ class WelcomePage {
 	
 	public static Customer createCustomer() {
 		String ID , name , address , NIC , tpNo , emailAddress;
+		ID = "fds";
+		name ="dz";
 		int age;
-		Scanner obj = new Scanner(System.in);
-		System.out.println("Enter your customer ID:");
-		ID = obj.nextLine();
-		System.out.println("Enter your name");
-		name = obj.nextLine();
+		Scanner obj1 = new Scanner(System.in);
+		System.out.print("Enter your customer ID:");
+		
+		ID = obj1.next();
+		
+		System.out.print("Enter your name");
+		if(obj1.hasNextLine()) {
+			name = obj1.next();
+		}
+		
 		System.out.println("Enter your address:");
-		address = obj.nextLine();
+		address = obj1.nextLine();
+		
 		System.out.println("Enter your NIC:");
-		NIC = obj.nextLine();
+		NIC = obj1.nextLine();
+		
 		System.out.println("Enter your telephone number");
-		tpNo = obj.nextLine();
+		tpNo = obj1.nextLine();
+		
 		System.out.println("Enter your age");
-		age = obj.nextInt();
+		age = obj1.nextInt();
+		
 		System.out.println("Enter your email address:");
-		emailAddress = obj.nextLine();
-		obj.close();
+		emailAddress = obj1.nextLine();
+		
+		obj1.close();
+		
 		Customer owner = new  Customer(ID, name, address, NIC,tpNo,age,emailAddress);
 		return owner;
 	}
