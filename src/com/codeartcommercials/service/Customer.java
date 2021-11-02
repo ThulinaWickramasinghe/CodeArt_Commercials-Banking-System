@@ -1,6 +1,6 @@
 package com.codeartcommercials.service;
 
-class Customer {
+public class Customer {
 	private String ID;
 	private String name;
 	private String address;
@@ -24,7 +24,7 @@ class Customer {
 		System.out.println("Name             : " + getID());
 		System.out.println("NIC              : " + getID());
 		System.out.println("Telephone number : " + getTpNo());
-		System.out.println("E-mail           : ");
+		System.out.println("E-mail           : " + getEmailAddress());
 		System.out.println("Age              : " + getAge());
 	}
 	

@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import com.codeartcommercials.exceptions.ImpossibleWithdrawAmountException;
 import com.codeartcommercials.exceptions.InvalidBalanceException;
 import com.codeartcommercials.exceptions.InvalidCurrencyException;
+import com.codeartcommercials.exceptions.InvalidPasswordFormatException;
 
-class Account {
+public class Account {
 	
 	private String ID;
 	private String type;
@@ -14,9 +15,10 @@ class Account {
 	private int balance; //balance will be stored using integer data type and measured using cents(Sri Lankan) because of issues of floating point data type with currency
 	private TransactionLog transactions;
 	private LocalDate startDate;
-	
+	private String password; 
 
-	public Account(String ID, String type, Customer owner, int amount, String branch) throws InvalidCurrencyException, InvalidBalanceException {
+
+	public Account(String ID, String type, Customer owner, int amount, String branch , String pin) throws InvalidCurrencyException, InvalidBalanceException, InvalidPasswordFormatException {
 		super();
 		setID(ID);
 		setType(type);
@@ -24,8 +26,8 @@ class Account {
 		deposit(amount);
 		setBranch(branch);
 		setStartDate();
+		setPassword(pin);
 		transactions = new TransactionLog(this.ID);
-		
 	}
 	
 	public void withdraw(int amount) throws InvalidCurrencyException, InvalidBalanceException, ImpossibleWithdrawAmountException{
@@ -68,6 +70,18 @@ class Account {
 	
 	public LocalDate getStartDate() {
 		return startDate;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) throws InvalidPasswordFormatException {
+		if(password.length() < 8) {
+			throw new InvalidPasswordFormatException();
+		}else {
+			this.password = password;
+		}
 	}
 	
 	public void setStartDate() {
