@@ -1,10 +1,12 @@
 package com.codeartcommercials.service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
-class TransactionLog {
+public class TransactionLog {
 	private File transactionLog;
 	
 	public TransactionLog(String ID) {
@@ -28,5 +30,19 @@ class TransactionLog {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void displayTransactionLog() {
+		try {
+			Scanner obj = new Scanner(this.transactionLog);
+			while(obj.hasNextLine()) {
+				String data = obj.nextLine();
+				System.out.println(data);
+			}
+			obj.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();			
+		}	
 	}
 }

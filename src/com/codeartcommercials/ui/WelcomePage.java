@@ -7,6 +7,7 @@ import com.codeartcommercials.exceptions.ImpossibleWithdrawAmountException;
 import com.codeartcommercials.exceptions.InvalidBalanceException;
 import com.codeartcommercials.exceptions.InvalidCurrencyException;
 import com.codeartcommercials.exceptions.InvalidPasswordException;
+import com.codeartcommercials.exceptions.InvalidPasswordFormatException;
 import com.codeartcommercials.service.AccountManager;
 import com.codeartcommercials.service.Customer;
 
@@ -30,11 +31,19 @@ class WelcomePage {
 				break;
 				
 			case 4:
-				//createAccount() function called
+				createAccount();
 				break;
 				
 			case 5:
-				//closeAccount() function called
+				closeAccount();
+				break;
+			
+			case 6:
+				viewAccountDetails();
+				break;
+			
+			case 7:
+				viewTransactionHistory();
 				break;
 				
 			default:
@@ -43,6 +52,40 @@ class WelcomePage {
 		}
 	}
 	
+	private static void viewTransactionHistory() {
+		Scanner obj = new Scanner(System.in);
+		String accNo , pin;
+		System.out.print("Enter account number                  : ");
+		accNo = obj.next();
+		System.out.print("Enter pin number                      : ");
+		pin = obj.next();
+	
+		try {
+			mgr.getAccountByOwner(accNo, pin).displayTransactionHistory();
+		} catch (InvalidPasswordException e) {
+			e.printStackTrace();
+		}
+		obj.close();
+		
+	}
+
+	private static void viewAccountDetails() {
+		Scanner obj = new Scanner(System.in);
+		String accNo , pin;
+		System.out.print("Enter account number                  : ");
+		accNo = obj.next();
+		System.out.print("Enter pin number                      : ");
+		pin = obj.next();
+	
+		try {
+			mgr.getAccountByOwner(accNo, pin).displayAccountDetails();
+		} catch (InvalidPasswordException e) {
+			e.printStackTrace();
+		}
+		obj.close();
+		
+	}
+
 	@SuppressWarnings("resource")
 	public static int mainMenu() {
 		Scanner obj = new Scanner(System.in);
@@ -54,13 +97,15 @@ class WelcomePage {
 		System.out.println("3 Transfer money");
 		System.out.println("4 Create a new bank account");
 		System.out.println("5 Close an existing account");
+		System.out.println("4 View account details");
+		System.out.println("5 View transaction history");
 		System.out.println("-----------------------------");
 		System.out.println("Enter the option number:");
 		
 		try {
 			option = obj.nextInt();
 			
-			if(option != 1 && option != 2 && option != 3 && option != 4 && option != 5) {
+			if(option != 1 && option != 2 && option != 3 && option != 4 && option != 5 && option!= 6 && option != 7) {
 				throw new InputMismatchException("Invalid input!!! Input should be an integer from 1 to 5.");
 			}
 		}catch(InputMismatchException e) {
@@ -142,18 +187,80 @@ class WelcomePage {
 	public static void createAccount() {
 		//create customer
 		Customer owner = createCustomer();
-		//account
+		
+		//create account
+		Scanner obj = new Scanner(System.in);
 		String ID,type,branch,pin;
-		mgr.createNewAccount(null, null, null, 0, null, null);
+		float balance;
+		int innerBalance;
+		
+		System.out.println("Enter the account number : ");
+		ID = obj.nextLine();
+		
+		System.out.println("Enter the account type : ");
+		type = obj.nextLine();
+		
+		System.out.println("Enter the initial deposit amount(Should be greater than or equal to Rs.1500.00): ");
+		balance = obj.nextFloat();
+		innerBalance = (int)(balance*100);
+		
+		System.out.println("Enter the branch : ");
+		branch = obj.nextLine();
+		
+		System.out.println("Enter the pin : ");
+		pin = obj.nextLine();
+		
+		try {
+			mgr.createNewAccount(ID, type, owner , innerBalance, branch, pin);
+			System.out.println("New account successfully created!");
+		} catch (InvalidCurrencyException | InvalidBalanceException | InvalidPasswordFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		obj.close();
+		
 	}
 	
 	public static void closeAccount() {
+		Scanner obj = new Scanner(System.in);
+		String accNo,pin;
 		
+		System.out.println("Enter the account number:");
+		accNo = obj.nextLine();
+		
+		System.out.println("Enter the pin           :");
+		pin = obj.nextLine();
+		
+		try {
+			mgr.closeAccount(accNo, pin);
+		} catch (InvalidPasswordException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		obj.close();
 	}
 	
 	public static Customer createCustomer() {
 		String ID , name , address , NIC , tpNo ,age , emailAddress;
-		
+		Scanner obj = new Scanner(System.in);
+		System.out.println("Enter your customer ID:");
+		ID = obj.nextLine();
+		System.out.println("");
+		name = obj.nextLine();
+		System.out.println("");
+		address = obj.nextLine();
+		System.out.println("");
+		NIC = obj.nextLine();
+		System.out.println("");
+		tpNo = obj.nextLine();
+		System.out.println("");
+		age = obj.nextLine();
+		System.out.println("");
+		emailAddress = obj.nextLine();
+		obj.close();
+		Customer owner = new  Customer(ID, name, address, NIC,tpNo,age,emailAddress);
+		return owner;
 	}
 
 }

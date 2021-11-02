@@ -64,6 +64,10 @@ public class Account {
 		displayBalance();
 	}
 	
+	public void displayTransactionHistory() {
+		this.getTransactions().displayTransactionLog();
+	}
+	
 	public void displayBalance() {
 		System.out.println("Your account balance is Rs." + getBalance()/100 + "." + getBalance()%100);
 	}
@@ -134,7 +138,7 @@ public class Account {
 		this.branch = branch;
 	}
 	
-	public TransactionLog getTransactions() {
+	private TransactionLog getTransactions() {
 		return transactions;
 	}
 	
