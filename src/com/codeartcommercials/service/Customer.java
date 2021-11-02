@@ -18,7 +18,16 @@ class Customer {
 		this.age = age;
 		this.emailAddress = emailAddress;
 	}
-
+	
+	public void displayCustomerDetails() {
+		System.out.println("Customer ID      : " + getID());
+		System.out.println("Name             : " + getID());
+		System.out.println("NIC              : " + getID());
+		System.out.println("Telephone number : " + getTpNo());
+		System.out.println("E-mail           : ");
+		System.out.println("Age              : " + getAge());
+	}
+	
 	public String getID() {
 		return ID;
 	}

@@ -1,18 +1,21 @@
 package com.codeartcommercials.service;
 
+import java.time.LocalDate;
 import com.codeartcommercials.exceptions.ImpossibleWithdrawAmountException;
 import com.codeartcommercials.exceptions.InvalidBalanceException;
 import com.codeartcommercials.exceptions.InvalidCurrencyException;
 
 class Account {
 	
+	private String ID;
 	private String type;
 	private Customer owner;
-	private int balance; //balance will be stored using integer data type and measured using cents(Sri Lankan) because of issues of floating point data type with currency
 	private String branch;
+	private int balance; //balance will be stored using integer data type and measured using cents(Sri Lankan) because of issues of floating point data type with currency
 	private TransactionLog transactions;
-	private String ID;
+	private LocalDate startDate;
 	
+
 	public Account(String ID, String type, Customer owner, int amount, String branch) throws InvalidCurrencyException, InvalidBalanceException {
 		super();
 		setID(ID);
@@ -20,7 +23,9 @@ class Account {
 		setOwner(owner);
 		deposit(amount);
 		setBranch(branch);
+		setStartDate();
 		transactions = new TransactionLog(this.ID);
+		
 	}
 	
 	public void withdraw(int amount) throws InvalidCurrencyException, InvalidBalanceException, ImpossibleWithdrawAmountException{
@@ -41,6 +46,32 @@ class Account {
 			transactions.write(amount, getBalance());//write to the transaction log
 		}
 		
+	}
+	
+	public void transferMoney(String receiverAccID , int amount) throws InvalidCurrencyException, InvalidBalanceException, ImpossibleWithdrawAmountException {
+		withdraw(amount);
+		AccountManager.getAccMgr().getAccount(receiverAccID).deposit(amount);
+	}
+	
+	public void displayAccountDetails() {
+		System.out.println("Account ID    : " + getID());
+		System.out.println("Account type  : " + getType());
+		System.out.println("Account owner : " + getOwner().getName());
+		System.out.println("Branch        : " + getBranch());
+		System.out.println("Start date    : " + getStartDate());
+		displayBalance();
+	}
+	
+	public void displayBalance() {
+		System.out.println("Your account balance is Rs." + getBalance()/100 + "." + getBalance()%100);
+	}
+	
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+	
+	public void setStartDate() {
+		this.startDate = java.time.LocalDate.now();
 	}
 	
 	public String getID() {
