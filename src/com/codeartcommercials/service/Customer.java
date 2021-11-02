@@ -6,10 +6,10 @@ public class Customer {
 	private String address;
 	private String NIC;
 	private String tpNo;
-	private String age;
+	private int age;
 	private String emailAddress;
 	
-	public Customer(String ID, String name, String address, String NIC, String tpNo, String age, String emailAddress) {
+	public Customer(String ID, String name, String address, String NIC, String tpNo, int age, String emailAddress) {
 		this.ID = ID;
 		this.name = name;
 		this.address = address;
@@ -68,11 +68,11 @@ public class Customer {
 		this.tpNo = tpNo;
 	}
 	
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 	
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 	

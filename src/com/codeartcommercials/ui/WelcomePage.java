@@ -104,7 +104,7 @@ class WelcomePage {
 		
 		try {
 			option = obj.nextInt();
-			
+			obj.nextLine();
 			if(option != 1 && option != 2 && option != 3 && option != 4 && option != 5 && option!= 6 && option != 7) {
 				throw new InputMismatchException("Invalid input!!! Input should be an integer from 1 to 5.");
 			}
@@ -242,21 +242,22 @@ class WelcomePage {
 	}
 	
 	public static Customer createCustomer() {
-		String ID , name , address , NIC , tpNo ,age , emailAddress;
+		String ID , name , address , NIC , tpNo , emailAddress;
+		int age;
 		Scanner obj = new Scanner(System.in);
 		System.out.println("Enter your customer ID:");
 		ID = obj.nextLine();
-		System.out.println("");
+		System.out.println("Enter your name");
 		name = obj.nextLine();
-		System.out.println("");
+		System.out.println("Enter your address:");
 		address = obj.nextLine();
-		System.out.println("");
+		System.out.println("Enter your NIC:");
 		NIC = obj.nextLine();
-		System.out.println("");
+		System.out.println("Enter your telephone number");
 		tpNo = obj.nextLine();
-		System.out.println("");
-		age = obj.nextLine();
-		System.out.println("");
+		System.out.println("Enter your age");
+		age = obj.nextInt();
+		System.out.println("Enter your email address:");
 		emailAddress = obj.nextLine();
 		obj.close();
 		Customer owner = new  Customer(ID, name, address, NIC,tpNo,age,emailAddress);
