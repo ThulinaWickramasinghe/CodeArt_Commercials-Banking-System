@@ -1,4 +1,4 @@
-package com.codeartcommercials.service;
+package com.codeartcommercials.core;
 
 public class Customer {
 	private String ID;

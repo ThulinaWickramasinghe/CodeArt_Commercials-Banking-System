@@ -1,15 +1,11 @@
 package com.codeartcommercials.ui;
 
+import com.codeartcommercials.core.*;
+import com.codeartcommercials.exceptions.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import com.codeartcommercials.exceptions.ImpossibleWithdrawAmountException;
-import com.codeartcommercials.exceptions.InvalidBalanceException;
-import com.codeartcommercials.exceptions.InvalidCurrencyException;
-import com.codeartcommercials.exceptions.InvalidPasswordException;
-import com.codeartcommercials.exceptions.InvalidPasswordFormatException;
-import com.codeartcommercials.service.AccountManager;
-import com.codeartcommercials.service.Customer;
+
 
 class WelcomePage {
 	

@@ -1,4 +1,4 @@
-package com.codeartcommercials.service;
+package com.codeartcommercials.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;

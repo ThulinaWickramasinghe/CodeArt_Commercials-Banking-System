@@ -1,4 +1,4 @@
-package com.codeartcommercials.service;
+package com.codeartcommercials.core;
 
 import java.time.LocalDate;
 import com.codeartcommercials.exceptions.ImpossibleWithdrawAmountException;
