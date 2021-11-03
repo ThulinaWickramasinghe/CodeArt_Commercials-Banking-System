@@ -20,6 +20,7 @@ public class Account {
 
 	public Account(String ID, String type, Customer owner, int amount, String branch , String pin) throws InvalidCurrencyException, InvalidBalanceException, InvalidPasswordFormatException {
 		super();
+		transactions = new TransactionLog(this.ID);
 		setID(ID);
 		setType(type);
 		setOwner(owner);
@@ -27,7 +28,6 @@ public class Account {
 		setBranch(branch);
 		setStartDate();
 		setPassword(pin);
-		transactions = new TransactionLog(this.ID);
 	}
 	
 	public void withdraw(int amount) throws InvalidCurrencyException, InvalidBalanceException, ImpossibleWithdrawAmountException{

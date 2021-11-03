@@ -14,7 +14,7 @@ import com.codeartcommercials.service.Customer;
 class WelcomePage {
 	
 	private static AccountManager mgr = AccountManager.getAccMgr();
-	
+	private static Scanner sc = new Scanner(System.in);
 	public static void main(String[] args) {
 		while(true) {
 			switch(mainMenu()) {
@@ -53,42 +53,37 @@ class WelcomePage {
 	}
 	
 	private static void viewTransactionHistory() {
-		Scanner obj = new Scanner(System.in);
 		String accNo , pin;
 		System.out.print("Enter account number                  : ");
-		accNo = obj.next();
+		accNo = sc.next();
 		System.out.print("Enter pin number                      : ");
-		pin = obj.next();
+		pin = sc.next();
 	
 		try {
 			mgr.getAccountByOwner(accNo, pin).displayTransactionHistory();
 		} catch (InvalidPasswordException e) {
 			e.printStackTrace();
 		}
-		obj.close();
 		
 	}
 
 	private static void viewAccountDetails() {
-		Scanner obj = new Scanner(System.in);
 		String accNo , pin;
 		System.out.print("Enter account number                  : ");
-		accNo = obj.next();
+		accNo = sc.next();
 		System.out.print("Enter pin number                      : ");
-		pin = obj.next();
+		pin = sc.next();
 	
 		try {
 			mgr.getAccountByOwner(accNo, pin).displayAccountDetails();
 		} catch (InvalidPasswordException e) {
 			e.printStackTrace();
 		}
-		obj.close();
 		
 	}
 
 //	@SuppressWarnings("resource")
 	public static int mainMenu() {
-		Scanner obj = new Scanner(System.in);
 		int option = 0;
 		System.out.println("~~~~~~~~ WELCOME TO CODEART_COMMERCIALS ~~~~~~~~\n\n");
 		System.out.println("Select a service from the menu given below.");
@@ -103,8 +98,8 @@ class WelcomePage {
 		System.out.print("Enter the option number:");
 		
 		try {
-			option = obj.nextInt();
-// 			obj.nextLine();
+			option = sc.nextInt();
+ 			sc.nextLine();
 			if(option != 1 && option != 2 && option != 3 && option != 4 && option != 5 && option!= 6 && option != 7) {
 				throw new InputMismatchException("Invalid input!!! Input should be an integer from 1 to 5.");
 			}
@@ -112,21 +107,21 @@ class WelcomePage {
 			System.out.println(e.getMessage());
 			option = 0;
 		}
-		obj.close();
+
 		return option;
 	}
 	
 	public static void withdrawMoney() {
-		Scanner obj = new Scanner(System.in);
+
 		String accNo , pin;
 		float amount;
 		int internalAmount;//amount in cents as an integer
 		System.out.print("Enter account number                  : ");
-		accNo = obj.next();
+		accNo = sc.next();
 		System.out.print("Enter pin number                      : ");
-		pin = obj.next();
+		pin = sc.next();
 		System.out.print("Enter the amount you want to withdraw : ");
-		amount = obj.nextFloat();
+		amount = sc.nextFloat();
 		internalAmount = (int)amount*100;
 		try {
 			mgr.getAccountByOwner(accNo, pin).withdraw(internalAmount);
@@ -136,18 +131,17 @@ class WelcomePage {
 				| InvalidPasswordException e) {
 			e.printStackTrace();
 		}
-		obj.close();
+
 	}
 	
 	public static void depositMoney() {
-		Scanner obj = new Scanner(System.in);
 		String accNo;
 		float amount;
 		int internalAmount;//amount in cents as an integer
 		System.out.print("Enter account number                 : ");
-		accNo = obj.next();
+		accNo = sc.next();
 		System.out.print("Enter the amount you want to deposit : ");
-		amount = obj.nextFloat();
+		amount = sc.nextFloat();
 		internalAmount = (int)amount*100;
 		try {
 			mgr.getAccount(accNo).deposit(internalAmount);
@@ -155,22 +149,20 @@ class WelcomePage {
 		} catch (InvalidCurrencyException | InvalidBalanceException e) {
 			e.printStackTrace();
 		}
-		obj.close();
 	}
 	
 	public static void transferMoney() {
-		Scanner obj = new Scanner(System.in);
 		String senderAccNo , pin , receiverAccNo;
 		float amount;
 		int internalAmount;//amount in cents as an integer
 		System.out.print("Enter your account number             : ");
-		senderAccNo = obj.next();
+		senderAccNo = sc.next();
 		System.out.print("Enter pin number                      : ");
-		pin = obj.next();
+		pin = sc.next();
 		System.out.print("Enter the receiver's account number   : ");
-		receiverAccNo = obj.next();
+		receiverAccNo = sc.next();
 		System.out.print("Enter the amount you want to transfer : ");
-		amount = obj.nextFloat();
+		amount = sc.nextFloat();
 		internalAmount = (int)amount*100;
 		try {
 			mgr.getAccountByOwner(senderAccNo, pin).transferMoney(receiverAccNo, internalAmount);
@@ -180,7 +172,6 @@ class WelcomePage {
 				| InvalidPasswordException e) {
 			e.printStackTrace();
 		}
-		obj.close();
 	}
 	
 	public static void createAccount() {
@@ -188,26 +179,28 @@ class WelcomePage {
 		Customer owner = createCustomer();
 		
 		//create account
-		Scanner obj = new Scanner(System.in);
+
 		String ID,type,branch,pin;
 		float balance;
 		int innerBalance;
 		
 		System.out.println("Enter the account number : ");
-		ID = obj.nextLine();
+		ID = sc.nextLine();
 		
 		System.out.println("Enter the account type : ");
-		type = obj.nextLine();
+		type = sc.nextLine();
 		
 		System.out.println("Enter the initial deposit amount(Should be greater than or equal to Rs.1500.00): ");
-		balance = obj.nextFloat();
+		balance = sc.nextFloat();
+		sc.nextLine();
+		
 		innerBalance = (int)(balance*100);
 		
 		System.out.println("Enter the branch : ");
-		branch = obj.nextLine();
+		branch = sc.nextLine();
 		
 		System.out.println("Enter the pin : ");
-		pin = obj.nextLine();
+		pin = sc.nextLine();
 		
 		try {
 			mgr.createNewAccount(ID, type, owner , innerBalance, branch, pin);
@@ -217,59 +210,51 @@ class WelcomePage {
 			e.printStackTrace();
 		}
 		
-		obj.close();
-		
+
 	}
 	
 	public static void closeAccount() {
-		Scanner obj = new Scanner(System.in);
+		
 		String accNo,pin;
 		
 		System.out.println("Enter the account number:");
-		accNo = obj.nextLine();
+		accNo = sc.nextLine();
 		
 		System.out.println("Enter the pin           :");
-		pin = obj.nextLine();
+		pin = sc.nextLine();
 		
 		try {
 			mgr.closeAccount(accNo, pin);
 		} catch (InvalidPasswordException e) {
 			e.printStackTrace();
 		}
-		obj.close();
+
 	}
 	
 	public static Customer createCustomer() {
-		String ID , name , address , NIC , tpNo , emailAddress;
-		ID = "fds";
-		name ="dz";
+		String name , address , NIC , tpNo , emailAddress;
 		int age;
-		Scanner obj1 = new Scanner(System.in);
+
 		System.out.print("Enter your customer ID:");
+		String ID = sc.nextLine();
 		
-		ID = obj1.next();
-		
-		System.out.print("Enter your name");
-		if(obj1.hasNextLine()) {
-			name = obj1.next();
-		}
+		System.out.print("Enter your name:");
+	    name = sc.nextLine();
 		
 		System.out.println("Enter your address:");
-		address = obj1.nextLine();
+		address = sc.nextLine();
 		
 		System.out.println("Enter your NIC:");
-		NIC = obj1.nextLine();
+		NIC = sc.nextLine();
 		
-		System.out.println("Enter your telephone number");
-		tpNo = obj1.nextLine();
+		System.out.println("Enter your telephone number:");
+		tpNo = sc.nextLine();
 		
-		System.out.println("Enter your age");
-		age = obj1.nextInt();
-		
+		System.out.println("Enter your age:");
+		age = sc.nextInt();
+		sc.nextLine();
 		System.out.println("Enter your email address:");
-		emailAddress = obj1.nextLine();
-		
-		obj1.close();
+		emailAddress = sc.nextLine();
 		
 		Customer owner = new  Customer(ID, name, address, NIC,tpNo,age,emailAddress);
 		return owner;

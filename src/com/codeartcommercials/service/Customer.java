@@ -32,8 +32,8 @@ public class Customer {
 		return ID;
 	}
 	
-	public void setID(String iD) {
-		ID = iD;
+	public void setID(String ID) {
+		this.ID = ID;
 	}
 	
 	public String getName() {
